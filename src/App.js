@@ -3,14 +3,13 @@ import "./App.css";
 import Movie from "./components/Movie";
 
 import MoviesList from "./components/MoviesList";
+import AddMovie from "./components/AddMovie";
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  useEffect(() => {
-    fetchMovieHandler();
-  }, [fetchMovieHandler]);
+
   const fetchMovieHandler = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -36,6 +35,12 @@ function App() {
     setLoading(false);
   }, []);
 
+  useEffect(() => {
+    fetchMovieHandler();
+  }, [fetchMovieHandler]);
+
+  function addMovieHandler(movie) {}
+
   let content = <p>found no movies.</p>;
   if (Movie.length > 0) {
     content = <MoviesList movies={movies}></MoviesList>;
@@ -48,6 +53,9 @@ function App() {
   }
   return (
     <div className="App">
+      <section>
+        <AddMovie onAddMovie={addMovieHandler} />
+      </section>
       <section>
         <button onClick={fetchMovieHandler}>Fetch Movies</button>
       </section>
